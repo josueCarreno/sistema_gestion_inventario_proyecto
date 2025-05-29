@@ -6,15 +6,168 @@
   <link rel="stylesheet" href="output.css">
   <title>Nuevo Producto</title>
 </head>
-<body>
+<body class="text-[#020817]">
   <main class="min-h-screen bg-gray-50 p-6">
-    <div class="flex w-full items-center justify-center  gap-4">
-        <button class="text-[#020817] py-2 px-4 flex items-center justify-center gap-4 text-[14px] border border-gray-200 rounded-md">
+    <div class="flex w-full items-center justify-center  gap-4 mb-6">
+        <button class="text-[#020817] py-2 px-6 flex items-center justify-center gap-4 text-[14px] border border-gray-200 rounded-md" >
           <img width="16px" src="./images/flecha_izquierda.svg" alt="">
-          Volver
+          <span class="font-semibold">Volver</span>
         </button>
         <h1 class="text-3xl font-bold">Nuevo Producto</h1>
     </div>
+    <form action="">
+      <section class="border border-gray-200 rounded-md p-6">
+        <div class="pb-6">
+          <h3 class="text-[23px] font-semibold">Información Básica</h3>
+        </div>
+        <div class="grid grid-cols-1 gap-4">
+          <div >
+            <label for="nombre_producto" class="text-[14px] font-medium">Nombre del Producto *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="nombre_producto" id="nombre_producto" placeholder="Ingrese el nombre">
+          </div>
+          <div >
+            <label for="marca" class="text-[14px] font-medium">Marca *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="marca" id="marca" placeholder="Ingrese la marca">
+          </div>
+          <div >
+            <label for="modelo" class="text-[14px] font-medium">Modelo *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="modelo" id="modelo" placeholder="Ingrese el modelo">
+          </div>
+          <div class="w-full">
+            <label for="categoría" class="text-[14px] font-medium">Categoría *</label>
+            <button name="categoría" id="categoría" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
+              <span class="text-[14px]">Seleccione una categoría</span>
+              <img width="16px" src="./images/flecha_abajo.svg" alt="">
+            </button>
+          </div>
+          <div class="w-full">
+            <label for="subcategoría" class="text-[14px] font-medium">Subcategoría *</label>
+            <button name="subcategoría" id="subcategoría" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
+              <span class="text-[14px]">Seleccione una subcategoría</span>
+              <img width="16px" src="./images/flecha_abajo.svg" alt="">
+            </button>
+          </div>
+          <div class="w-full">
+            <label for="estado" class="text-[14px] font-medium">Estado *</label>
+            <button name="estado" id="estado" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
+              <span class="text-[14px]">Activo</span>
+              <img width="16px" src="./images/flecha_abajo.svg" alt="">
+            </button>
+          </div>
+          <div >
+            <label for="descripcion" class="text-[14px] font-medium">Descripción *</label>
+            <textarea class="mt-2 py-2 px-3 border border-gray-200 rounded-md w-full placeholder:text-[14px]"  name="descripcion" id="descripcion" placeholder="Descripción detallada del producto"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="border border-gray-200 rounded-md p-6">
+        <div class="pb-6">
+          <h3 class="text-[23px] font-semibold">Precios e Inventario</h3>
+        </div>
+        <div class="grid grid-cols-1 gap-4">
+          <div >
+            <label for="precio_compra" class="text-[14px] font-medium">Precio de Compra *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="precio_compra" id="precio_compra" value="0" placeholder="0.00">
+          </div>
+          <div >
+            <label for="precio_venta" class="text-[14px] font-medium">Precio de Venta *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="precio_venta" id="precio_venta" value="0" placeholder="0.00">
+          </div>
+          <div >
+            <label for="costo_envio" class="text-[14px] font-medium">Costo de Envío</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="costo_envio" id="costo_envio" value="0" placeholder="0.00">
+          </div>
+          <div >
+            <label for="cantidad_stock" class="text-[14px] font-medium">Cantidad en Stock *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="cantidad_stock" id="cantidad_stock" value="0" placeholder="0">
+          </div>
+          <div >
+            <label for="cantidad_minima" class="text-[14px] font-medium">Cantidad Mínima *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="cantidad_minima" id="cantidad_minima" value="1" placeholder="1">
+          </div>
+          <div >
+            <label for="nombre_proveedor" class="text-[14px] font-medium">Proveedor *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="nombre_proveedor" id="nombre_proveedor" placeholder="Nombre del Proveedor">
+          </div>
+        </div>
+      </section>
+
+      <section class="border border-gray-200 rounded-md p-6">
+        <div class="pb-6">
+          <h3 class="text-[22px] font-semibold leading-none">Fechas y Características Físicas</h3>
+        </div>
+        <div class="grid grid-cols-1 gap-4">
+          <div >
+            <label for="fecha_ingreso" class="text-[14px] font-medium">Fecha de Ingreso *</label>
+            <div class="mt-2 py-2 px-3  w-full border border-gray-200 rounded-md">
+              <input class="" type="date" name="fecha_ingreso" id="fecha_ingreso" placeholder="Nombre del Proveedor">
+            </div>
+          </div>
+          <div >
+            <label for="fecha_vencimiento" class="text-[14px] font-medium">Fecha de Vencimiento</label>
+            <div class="mt-2 py-2 px-3  w-full border border-gray-200 rounded-md">
+              <input class="" type="date" name="fecha_vencimiento" id="fecha_vencimiento" placeholder="Nombre del Proveedor">
+            </div>
+          </div>
+          <div >
+            <label for="peso" class="text-[14px] font-medium">Peso (Kg) *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="peso" id="peso" value="0" placeholder="0.00">
+          </div>
+          <div >
+            <label for="color_producto" class="text-[14px] font-medium">Color *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="color_producto" id="color_producto" placeholder="Color del producto">
+          </div>
+          <div >
+            <label for="material" class="text-[14px] font-medium">Material *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="material" id="material" placeholder="Material del producto">
+          </div>
+          <div >
+            <label for="codigo_barra" class="text-[14px] font-medium">Código de Barras *</label>
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="codigo_barra" id="codigo_barra" placeholder="123456789012">
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label for="largo_producto" class="text-[14px] font-medium">Largo *</label>
+              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="largo_producto" id="largo_producto" placeholder="0.0" value="0">
+            </div>
+            <div>
+              <label for="ancho_producto" class="text-[14px] font-medium">Ancho *</label>
+              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="ancho_producto" id="ancho_producto" placeholder="0.0" value="0">
+            </div>
+            <div>
+              <label for="alto_producto" class="text-[14px] font-medium">Alto *</label>
+              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="alto_producto" id="alto_producto" placeholder="0.0" value="0">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border border-gray-200 rounded-md p-6">
+        <div class="pb-6">
+          <h3 class="text-[24px] font-semibold leading-none">Imágenes del Producto</h3>
+        </div>
+        <div>
+          <button class="text-[#020817] py-2 px-5 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md" >
+            <img width="16px" src="./images/mas_gris.svg" alt="">
+            <span class="font-semibold">Agregar Imagen</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="border border-gray-200 rounded-md p-6">
+        <div class="pb-6">
+          <h3 class="text-[24px] font-semibold leading-none">Tags</h3>
+        </div>
+        <div class="flex gap-2">
+          <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="tag" id="tag" placeholder="Nuevo tag">
+          <button class="text-[#020817] py-2 px-5 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md" ></button>
+            <img width="16px" src="./images/mas_gris.svg" alt="">
+          </button>
+        </div>
+      </section>
+
+    </form>
   </main>
 </body>
 </html>
