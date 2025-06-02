@@ -1,11 +1,8 @@
-semaforo = false;
-
 document.querySelectorAll('.nuevo_producto').forEach(agregar => {
   agregar.addEventListener('click', function() {
     irArriba();
     ocultarSecciones("seccion_1");
     mostrarSecciones("seccion_2");
-    semaforo = true;
   });
 });
   
@@ -43,3 +40,24 @@ function irArriba() {
       behavior: 'smooth' // Animación suave
   });
 }
+
+function nuevoProducto() {
+  let nombre = getElementById("nombre_producto").value;
+  let marca = getElementById("marca").value;
+  let modelo = getElementById("modelo").value;
+
+
+}
+
+let formulario = document.getElementById("formulario");
+
+formulario.addEventListener("submit", function (event) {
+  event.preventDefault();
+  nuevoProducto();
+});
+
+let categoria = document.getElementById("categoria");
+categoria.addEventListener("click", function () {
+  categoria.options[0].style.display = 'none'; 
+});
+
