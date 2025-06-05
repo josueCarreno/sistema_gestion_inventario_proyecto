@@ -53,11 +53,70 @@ let formulario = document.getElementById("formulario");
 
 formulario.addEventListener("submit", function (event) {
   event.preventDefault();
-  nuevoProducto();
+  //nuevoProducto();
 });
 
-let categoria = document.getElementById("categoria");
-categoria.addEventListener("click", function () {
-  categoria.options[0].style.display = 'none'; 
+limpiarSelect("categoria");
+limpiarSelect("subcategoría");
+
+function limpiarSelect(select) {
+  let nombre = document.getElementById(select);
+  nombre.addEventListener("click", function () {
+    nombre.options[0].style.display = 'none'; 
+  });
+}
+
+let subcategoria = document.getElementById("subcategoría");
+
+subcategoria.addEventListener("click", function () {
+  let categoria = document.getElementById("categoria").value;
+  if (categoria == "Electrónicos") {
+    subcategoria.innerHTML = `
+      <option selected>Seleccione una subcategoría</option> 
+      <option value="Teléfonos">Teléfonos</option>
+      <option value="Computadoras">Computadoras</option>
+      <option value="Audio">Audio</option>
+      <option value="Accesorios">Accesorios</option>
+  `
+  }
+  if (categoria == "Ropa") {
+    subcategoria.innerHTML = `
+      <option selected>Seleccione una subcategoría</option> 
+      <option value="Vestimenta">Vestimenta</option>
+      <option value="Accesorios">Accesorios</option>
+      <option value="Calzado">Calzado</option>
+  `
+  }
+  if (categoria == "Hogar") {
+    subcategoria.innerHTML = `
+      <option selected>Seleccione una subcategoría</option> 
+      <option value="Muebles">Muebles</option>
+      <option value="Accesorios">Accesorios</option>
+      <option value="Electrónica">Electrónica</option>
+  `
+  }
+});
+
+let agregarURLImg = document.getElementById("agregar_imagen");
+
+agregarURLImg.addEventListener("click", function () {
+  //let url = document.getElementById("url_imagen").value;
+  let url_contenedor = document.getElementById("url_contenedor");
+  url_contenedor.innerHTML += `
+    <div class="url_hijo flex mt-2 gap-2">
+      <input class=" py-2 px-3 border border-gray-200 rounded-md w-[85%]" type="text" name="url_imagen" id="url_imagen" placeholder="URL de la imagen">
+      <button  class="eliminar_url text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md ">
+        <img width="16px" src="./images/equis_gris.svg" alt="" class=" top-1.5 right-1.5 z-10 flex">
+      </button>
+    </div>
+  `;
+
+  let eliminar_url = document.getElementsByClassName("eliminar_url");
+  for (elemento of eliminar_url) {
+    elemento.addEventListener("click", function () {
+      this.parentElement.remove();
+    });
+  }
+  
 });
 

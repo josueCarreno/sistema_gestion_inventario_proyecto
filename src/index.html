@@ -161,7 +161,7 @@
               <img width="16px" src="./images/flecha_abajo.svg" alt="">
             </div>-->
             <select id="categoria" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
-              <option selected>Seleccione una categoría</option>
+              <option selected disabled>Seleccione una categoría</option>
               <option value="Electrónicos">Electrónicos</option>
               <option value="Ropa">Ropa</option>
               <option value="Hogar">Hogar</option>
@@ -175,17 +175,16 @@
           </div>
           <div class="w-full">
             <label for="subcategoría" class="text-[14px] font-medium">Subcategoría *</label>
-            <button name="subcategoría" id="subcategoría" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
-              <span class="text-[14px]">Seleccione una subcategoría</span>
-              <img width="16px" src="./images/flecha_abajo.svg" alt="">
-            </button>
+            <select id="subcategoría" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
+              <option selected disabled>Seleccione una categoría</option>
+            </select>
           </div>
           <div class="w-full">
             <label for="estado" class="text-[14px] font-medium">Estado *</label>
-            <button name="estado" id="estado" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
-              <span class="text-[14px]">Activo</span>
-              <img width="16px" src="./images/flecha_abajo.svg" alt="">
-            </button>
+            <select id="estado" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
+              <option selected>Activo</option>
+              <option>Inactivo</option>
+            </select>
           </div>
           <div >
             <label for="descripcion" class="text-[14px] font-medium">Descripción *</label>
@@ -280,8 +279,9 @@
         <div class="pb-6">
           <h3 class="text-[24px] font-semibold leading-none">Imágenes del Producto</h3>
         </div>
-        <div>
-          <button class="text-[#020817] py-2 px-5 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md" >
+        <div  id="url_contenedor"></div>
+        <div class="mt-4">
+          <button id="agregar_imagen" class="text-[#020817] py-2 px-5 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md" >
             <img width="16px" src="./images/mas_gris.svg" alt="">
             <span class="font-semibold">Agregar Imagen</span>
           </button>
