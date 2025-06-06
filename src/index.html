@@ -137,7 +137,7 @@
     </div>
 
     <form action="" id="formulario" class="seccion_2 hidden flex-col gap-6">
-      <section class=" border border-gray-200 rounded-md p-6">
+      <section class=" border border-gray-200 rounded-md p-6 bg-white">
         <div class="pb-6">
           <h3 class="text-[23px] font-semibold">Información Básica</h3>
         </div>
@@ -156,10 +156,6 @@
           </div>
           <div class="w-full">
             <label for="categoria" class="text-[14px] font-medium">Categoría *</label>
-            <!--<div name="categoria" id="categoria" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
-              <span class="text-[14px]">Seleccione una categoría</span>
-              <img width="16px" src="./images/flecha_abajo.svg" alt="">
-            </div>-->
             <select id="categoria" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
               <option selected disabled>Seleccione una categoría</option>
               <option value="Electrónicos">Electrónicos</option>
@@ -193,7 +189,7 @@
         </div>
       </section>
 
-      <section class="border border-gray-200 rounded-md p-6">
+      <section class="border border-gray-200 rounded-md p-6 bg-white">
         <div class="pb-6">
           <h3 class="text-[23px] font-semibold">Precios e Inventario</h3>
         </div>
@@ -225,7 +221,7 @@
         </div>
       </section>
 
-      <section class="border border-gray-200 rounded-md p-6">
+      <section class="border border-gray-200 rounded-md p-6 bg-white">
         <div class="pb-6">
           <h3 class="text-[22px] font-semibold leading-none">Fechas y Características Físicas</h3>
         </div>
@@ -275,7 +271,7 @@
         </div>
       </section>
 
-      <section class="border border-gray-200 rounded-md p-6">
+      <section class="border border-gray-200 rounded-md p-6 bg-white">
         <div class="pb-6">
           <h3 class="text-[24px] font-semibold leading-none">Imágenes del Producto</h3>
         </div>
@@ -287,20 +283,20 @@
           </button>
         </div>
       </section>
-
-      <section class="border border-gray-200 rounded-md p-6 w-full">
+      <section class="border border-gray-200 rounded-md p-6 w-full bg-white">
         <div class="pb-6">
           <h3 class="text-[24px] font-semibold leading-none">Tags</h3>
         </div>
+        <div  id="etiquetas_contenedor" class="flex flex-wrap gap-2"></div>
         <div class="flex mt-2 gap-2">
           <input class=" py-2 px-3 border border-gray-200 rounded-md w-[85%]" type="text" name="tag" id="tag" placeholder="Nuevo tag">
-          <button class="text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md ">
+          <button id="agregar_tag" class="text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md ">
             <img width="16px" src="./images/mas_gris.svg" alt="" class=" top-1.5 right-1.5 z-10 flex">
           </button>
         </div>
       </section>
 
-      <section class="border border-gray-200 rounded-md p-6 w-full">
+      <section class="border border-gray-200 rounded-md p-6 w-full bg-white">
         <div class="pb-6">
           <h3 class="text-[24px] font-semibold leading-none">Especificaciones Técnicas</h3>
         </div>
@@ -318,7 +314,7 @@
         </div>
       </section>
 
-      <section class="border border-gray-200 rounded-md p-6 w-full">
+      <section class="border border-gray-200 rounded-md p-6 w-full bg-white">
         <div class="pb-6">
           <h3 class="text-[24px] font-semibold leading-none">Notas Adicionales</h3>
         </div>
