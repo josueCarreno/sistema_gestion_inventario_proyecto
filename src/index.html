@@ -56,7 +56,7 @@
       </div>
     </section>
 
-    <section class="seccion_1 py-12 px-6 mt-6 border border-gray-200 rounded-md hidden flex-col justify-center gap-4">
+    <section id="contenedor_sin_productos" class="seccion_1 py-12 px-6 mt-6 border border-gray-200 rounded-md hidden flex-col justify-center gap-4">
       <div class="flex flex-col items-center mb-4">
         <img class="mb-4" width="64px" src="./images/caja.svg" alt="">
         <h3 class="mb-2 text-[20px] text-gray-600 font-semibold">No se encontraron productos</h3>
@@ -68,9 +68,8 @@
       </div>
     </section>
 
-    <section>
-      <article class="seccion_1 p-6 mt-6 border border-gray-200 rounded-md flex flex-col justify-center gap-3 bg-white">
-        <!-- Lo que Haría JS -->
+    <section id="contenedor_productos">
+      <!--<article class="seccion_1 p-6 mt-6 border border-gray-200 rounded-md flex flex-col justify-center gap-3 bg-white">
         <div class="flex items-start">
           <div class="w-[75%]">
             <h3 class="text-[18px] font-semibold">Tarjeta Ram</h3>
@@ -121,8 +120,7 @@
             </button>
           </div>
         </div>
-        
-      </article>
+      </article>-->
     </section>
 
 
@@ -170,9 +168,9 @@
             </select>
           </div>
           <div class="w-full">
-            <label for="subcategoría" class="text-[14px] font-medium">Subcategoría *</label>
-            <select id="subcategoría" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
-              <option selected disabled>Seleccione una categoría</option>
+            <label for="subcategoria" class="text-[14px] font-medium">Subcategoría *</label>
+            <select id="subcategoria" class="w-full border border-gray-200 rounded-md mt-2 py-2 px-3 text-[14px] text-left flex justify-between">
+              <option selected disabled>Seleccione una subcategoría</option>
             </select>
           </div>
           <div class="w-full">
@@ -184,7 +182,7 @@
           </div>
           <div >
             <label for="descripcion" class="text-[14px] font-medium">Descripción *</label>
-            <textarea class="mt-2 py-2 px-3 border border-gray-200 rounded-md w-full placeholder:text-[14px]"  name="descripcion" id="descripcion" placeholder="Descripción detallada del producto"></textarea>
+            <textarea class="mt-2 py-2 px-3 border border-gray-200 rounded-md w-full placeholder:text-[14px] min-h-[80px]"  name="descripcion" id="descripcion" placeholder="Descripción detallada del producto"></textarea>
           </div>
         </div>
       </section>
@@ -196,15 +194,15 @@
         <div class="grid grid-cols-1 gap-4">
           <div >
             <label for="precio_compra" class="text-[14px] font-medium">Precio de Compra *</label>
-            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="precio_compra" id="precio_compra" value="0" placeholder="0.00">
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="precio_compra" id="precio_compra" value="0" placeholder="0.00">
           </div>
           <div >
             <label for="precio_venta" class="text-[14px] font-medium">Precio de Venta *</label>
-            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="precio_venta" id="precio_venta" value="0" placeholder="0.00">
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="precio_venta" id="precio_venta" value="0" placeholder="0.00">
           </div>
           <div >
             <label for="costo_envio" class="text-[14px] font-medium">Costo de Envío</label>
-            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="costo_envio" id="costo_envio" value="0" placeholder="0.00">
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="costo_envio" id="costo_envio" value="0" placeholder="0.00">
           </div>
           <div >
             <label for="cantidad_stock" class="text-[14px] font-medium">Cantidad en Stock *</label>
@@ -240,11 +238,11 @@
           </div>
           <div >
             <label for="peso" class="text-[14px] font-medium">Peso (Kg) *</label>
-            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="peso" id="peso" value="0" placeholder="0.00">
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="peso" id="peso" value="0" placeholder="0.00">
           </div>
           <div >
             <label for="color_producto" class="text-[14px] font-medium">Color *</label>
-            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="text" name="color_producto" id="color_producto" placeholder="Color del producto">
+            <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md"  type="text" name="color_producto" id="color_producto" placeholder="Color del producto">
           </div>
           <div >
             <label for="material" class="text-[14px] font-medium">Material *</label>
@@ -257,15 +255,15 @@
           <div class="grid grid-cols-3 gap-4">
             <div>
               <label for="largo_producto" class="text-[14px] font-medium">Largo *</label>
-              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="largo_producto" id="largo_producto" placeholder="0.0" value="0">
+              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="largo_producto" id="largo_producto" placeholder="0.0" value="0">
             </div>
             <div>
               <label for="ancho_producto" class="text-[14px] font-medium">Ancho *</label>
-              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="ancho_producto" id="ancho_producto" placeholder="0.0" value="0">
+              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="ancho_producto" id="ancho_producto" placeholder="0.0" value="0">
             </div>
             <div>
               <label for="alto_producto" class="text-[14px] font-medium">Alto *</label>
-              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" type="number" name="alto_producto" id="alto_producto" placeholder="0.0" value="0">
+              <input class="mt-2 py-2 px-3 border border-gray-200 rounded-md" step="0.01" type="number" name="alto_producto" id="alto_producto" placeholder="0.0" value="0">
             </div>
           </div>
         </div>
@@ -300,12 +298,13 @@
         <div class="pb-6">
           <h3 class="text-[24px] font-semibold leading-none">Especificaciones Técnicas</h3>
         </div>
+        <div id="especificaciones_contenedor"></div>
         <div class="grid grid-cols-1 gap-4 mt-4">
           <div class="">
             <input class=" py-2 px-3 border border-gray-200 rounded-md  w-full" type="text" name="especificacion" id="especificacion" placeholder="Especificación">
           </div>
           <div class="">
-            <input class=" py-2 px-3 border border-gray-200 rounded-md  w-full" type="text" name="valor_especificación" id="valor_especificación" placeholder="Valor">
+            <input class=" py-2 px-3 border border-gray-200 rounded-md  w-full" type="text" name="valor_especificacion" id="valor_especificacion" placeholder="Valor">
           </div>
           <button id="agregar_especificacion" class="py-2.5 px-4 flex gap-4 text-[14px] border border-gray-200 rounded-md font-semibold w-full  justify-center">
             <img class="w-4" src="./images/mas_gris.svg" alt="">
