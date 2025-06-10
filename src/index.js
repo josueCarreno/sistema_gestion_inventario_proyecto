@@ -1,6 +1,8 @@
 document.querySelectorAll('.nuevo_producto').forEach(agregar => {
   agregar.addEventListener('click', function() {
     irArriba();
+    sinProductos.classList.remove('flex');
+    sinProductos.classList.add('hidden');
     ocultarSecciones("seccion_1");
     mostrarSecciones("seccion_2");
   });
@@ -9,16 +11,24 @@ document.querySelectorAll('.nuevo_producto').forEach(agregar => {
 document.querySelectorAll('.volver').forEach(atras => {
   atras.addEventListener('click', function(event) {
     event.preventDefault();
+
+    irArriba();
+
+    limpiarFormulario();
+
+    evaluarProductos();
+
     ocultarSecciones("seccion_2");
     mostrarSecciones("seccion_1");
   });
 });
 
-  
+let sinProductos = document.getElementById("contenedor_sin_productos");
+let productos = [];
 
 function ocultarSecciones(seccion = "seccion_1") {
   ocultar = document.getElementsByClassName(seccion);
-  
+
   for (elemento of ocultar) {
     elemento.classList.remove('flex');
     elemento.style.display = 'none';
@@ -230,9 +240,12 @@ let formulario = document.getElementById("formulario");
 formulario.addEventListener("submit", function (event) {
   event.preventDefault();
   nuevoProducto();
+  ocultarSecciones("seccion_2");
+  mostrarSecciones("seccion_1");
+  irArriba();
+  limpiarFormulario();
 });
 
-let productos = [];
 let producto = {};
 let contadorID = 1;
 
@@ -279,14 +292,18 @@ function nuevoProducto() {
   contadorID++;
   console.log(productos);
 
+  actualizarCantidadProductos();
+
   mostrarProducto();
 }
 
+let contenedorProductos = document.getElementById("contenedor_productos");
+
 function mostrarProducto() {
-  contenedorProductos = document.getElementById("contenedor_productos");
+  
   contenedorProductos.innerHTML = "";
 
-  productos.map((producto) => {
+  productos.forEach((producto, indice) => {
     let imprimirProducto = document.createElement("article");
 
     imprimirProducto.classList.add("flex", "flex-col", "gap-3", "p-6", "border", "border-gray-200", "rounded-md", "seccion_1", "mt-6", "justify-center", "bg-white");
@@ -335,20 +352,50 @@ function mostrarProducto() {
               <img class="w-4" src="./images/editar.svg" alt="">
               <span class="">Editar</span>
             </button>
-            <button class="px-3 flex gap-4 border border-gray-200 rounded-md font-semibold  justify-center items-center">
+            <button onclick="eliminarProducto(${indice})" class=" px-3 flex gap-4 border border-gray-200 rounded-md font-semibold  justify-center items-center">
               <img width="22px" src="./images/eliminar.svg" alt="">
             </button>
           </div>
         </div>
     `;
-
-
+  
     contenedorProductos.appendChild(imprimirProducto);
+
   });
 
+  
+
+};
+
+function limpiarFormulario() {
+  let formulario = document.getElementById("formulario");
+  formulario.reset();
+}
+
+function eliminarProducto(indice) {
+  productos.splice(indice, 1);
+  actualizarCantidadProductos();
+  evaluarProductos();
+  mostrarProducto();
+}
+
+function evaluarProductos() {
+  if (productos.length >= 1) {
+      sinProductos.classList.remove('flex');
+      sinProductos.classList.add('hidden');
+    } else {
+      sinProductos.classList.add('flex');
+      sinProductos.classList.remove('hidden');
+    }
+}
+
+function actualizarCantidadProductos() {
+  let cantidadProductos = productos.length;
+  const cantidadProductosElement = document.getElementById("total_productos");
+  cantidadProductosElement.textContent = cantidadProductos;
 }
 
 
-let sinProductos = document.getElementById("contenedor_sin_productos");
+
 
 

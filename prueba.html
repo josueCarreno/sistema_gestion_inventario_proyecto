@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar elemento de un arreglo</title>
+</head>
+<body>
+    <ul id="lista">
+        <!-- Los elementos de la lista se agregarán aquí -->
+    </ul>
+
+    <script>
+        // Arreglo de ejemplo
+        let arreglo = ['Elemento 1', 'Elemento 2', 'Elemento 3', 'Elemento 4'];
+
+        // Función para renderizar la lista
+        function renderizarLista() {
+            const lista = document.getElementById('lista');
+            lista.innerHTML = '';
+            arreglo.forEach((elemento, indice) => {
+                const li = document.createElement('li');
+                li.textContent = elemento;
+                li.onclick = () => eliminarElemento(indice);
+                lista.appendChild(li);
+            });
+        }
+
+        // Función para eliminar un elemento del arreglo
+        function eliminarElemento(indice) {
+            arreglo.splice(indice, 1);
+            renderizarLista();
+        }
+
+        // Renderizar la lista inicialmente
+        renderizarLista();
+    </script>
+</body>
+</html>
