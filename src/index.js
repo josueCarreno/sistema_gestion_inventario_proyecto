@@ -1,27 +1,31 @@
-document.querySelectorAll('.nuevo_producto').forEach(agregar => {
-  agregar.addEventListener('click', function() {
-    irArriba();
-    sinProductos.classList.remove('flex');
-    sinProductos.classList.add('hidden');
-    ocultarSecciones("seccion_1");
-    mostrarSecciones("seccion_2");
+function actualizarEventos() {
+  document.querySelectorAll('.nuevo_producto').forEach(agregar => {
+    agregar.addEventListener('click', function() {
+      irArriba();
+      sinProductos.classList.remove('flex');
+      sinProductos.classList.add('hidden');
+      ocultarSecciones("seccion_1");
+      mostrarSecciones("seccion_2");
+    });
   });
-});
-  
-document.querySelectorAll('.volver').forEach(atras => {
-  atras.addEventListener('click', function(event) {
-    event.preventDefault();
+    
+  document.querySelectorAll('.volver').forEach(atras => {
+    atras.addEventListener('click', function(event) {
+      event.preventDefault();
 
-    irArriba();
+      irArriba();
 
-    limpiarFormulario();
+      limpiarFormulario();
 
-    evaluarProductos();
+      evaluarProductos();
 
-    ocultarSecciones("seccion_2");
-    mostrarSecciones("seccion_1");
+      ocultarSecciones("seccion_2");
+      mostrarSecciones("seccion_1");
+    });
   });
-});
+}
+
+actualizarEventos();
 
 let sinProductos = document.getElementById("contenedor_sin_productos");
 let productos = [];
@@ -62,18 +66,18 @@ function limpiarSelect(select) {
   });
 }
 
-const subcategoria = document.getElementById("subcategoria");
+const subcategoriaHtml = document.getElementById("subcategoria");
 let listasSubcategoria = [
   ["Teléfonos", "Computadoras", "Audio", "Accesorios"],
   ["Vestimenta", "Accesorios", "Calzado"],
   ["Muebles", "Accesorios", "Electrónica"],
 ];
 
-let categoria = document.getElementById("categoria");
+let categoriaHTML = document.getElementById("categoria");
 
-categoria.addEventListener("click", function () {
+categoriaHTML.addEventListener("click", function () {
 
-  subcategoria.innerHTML = `
+  subcategoriaHtml.innerHTML = `
     <option selected>Seleccione una subcategoría</option> 
   `
 
@@ -83,7 +87,7 @@ categoria.addEventListener("click", function () {
     actualizarSubcategoria(0);
   }
   if (categoriaValor == "Ropa") {
-    subcategoria.innerHTML = `
+    subcategoriaHtml.innerHTML = `
       <option selected>Seleccione una subcategoría</option> 
       <option value="Vestimenta">Vestimenta</option>
       <option value="Accesorios">Accesorios</option>
@@ -91,7 +95,7 @@ categoria.addEventListener("click", function () {
   `
   }
   if (categoriaValor == "Hogar") {
-    subcategoria.innerHTML = `
+    subcategoriaHtml.innerHTML = `
       <option selected>Seleccione una subcategoría</option> 
       <option value="Muebles">Muebles</option>
       <option value="Accesorios">Accesorios</option>
@@ -107,17 +111,38 @@ function actualizarSubcategoria(posicion) {
     let nuevaOption = document.createElement("option");
     nuevaOption.value = opcion;
     nuevaOption.textContent = opcion;
-    subcategoria.appendChild(nuevaOption);
+    subcategoriaHtml.appendChild(nuevaOption);
 });
 }
 
-let agregarURLImg = document.getElementById("agregar_imagen");
-
-agregarURLImg.addEventListener("click", function (event) {
-
+function agregarUrl(event, indice = undefined) {
+  
   event.preventDefault();
 
   let url_contenedor = document.getElementById("url_contenedor");
+
+  let cuerpoDiv = `
+    <input class="url_imagen py-2 px-3 border border-gray-200 rounded-md w-[85%]" type="text" name="url_imagen" placeholder="URL de la imagen">
+    <button onClick="this.parentElement.remove();" class="eliminar_url text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md ">
+      <img width="16px" src="./images/equis_gris.svg" alt="" class=" top-1.5 right-1.5 z-10 flex">
+    </button>
+  `;
+  
+  if (indice != undefined) {
+
+    document.getElementById("url_contenedor").innerHTML = "";
+
+    for (let i = 0; i < productos[indice].imagenes.length; i++) {
+      url_contenedor.appendChild(document.createElement("div"));
+      url_contenedor.lastElementChild.classList.add("flex", "mt-2", "gap-2");
+      url_contenedor.lastElementChild.innerHTML = cuerpoDiv;
+
+      document.getElementsByClassName("url_imagen")[i].value = productos[indice].imagenes[i];
+    };    
+    return;
+  }
+
+  
 
   if (url_contenedor.children.length > 0) {
     let url = document.getElementsByClassName("url_imagen");
@@ -127,27 +152,11 @@ agregarURLImg.addEventListener("click", function (event) {
       }
     }
   }
-  
-
-  let cuerpoDiv = `
-    <input class="url_imagen py-2 px-3 border border-gray-200 rounded-md w-[85%]" type="text" name="url_imagen" placeholder="URL de la imagen">
-    <button  class="eliminar_url text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md ">
-      <img width="16px" src="./images/equis_gris.svg" alt="" class=" top-1.5 right-1.5 z-10 flex">
-    </button>
-  `;
 
   url_contenedor.appendChild(document.createElement("div"));
   url_contenedor.lastElementChild.classList.add("flex", "mt-2", "gap-2");
   url_contenedor.lastElementChild.innerHTML = cuerpoDiv;
-
-  let eliminar_url = document.getElementsByClassName("eliminar_url");
-  for (elemento of eliminar_url) {
-    elemento.addEventListener("click", function () {
-      this.parentElement.remove();
-    });
-  }
-  
-});
+}
 
 let agregarEtiquetaClick = document.getElementById("agregar_tag");
 let nombreEtiqueta = document.getElementById("tag");
@@ -246,10 +255,13 @@ formulario.addEventListener("submit", function (event) {
   limpiarFormulario();
 });
 
-let producto = {};
-let contadorID = 1;
 
-function nuevoProducto() {
+contadorID = 1;
+
+function nuevoProducto(booleano = false) {
+
+  let producto = {};
+
   let id = contadorID;
   let nombre = document.getElementById("nombre_producto").value;
   let marca = document.getElementById("marca").value;
@@ -280,11 +292,10 @@ function nuevoProducto() {
 
   let imagenesGlobal = document.getElementsByClassName("url_imagen");
   let imagenes = [];
-
+  
   for (elemento of imagenesGlobal) {
     imagenes.push(elemento.value);
   }
-
 
   producto = {id, nombre, descripcion, categoria, subcategoria, marca, modelo, precioCompra, precioVenta, costoEnvio, cantidadStock, cantidadMinima, proveedor, fechaIngreso, fechaVencimiento, peso, dimensiones: {largo, ancho, alto}, color, material, codigoBarras, imagenes, especificacionesTecnicas, etiquetas ,estado, notas};
 
@@ -348,7 +359,7 @@ function mostrarProducto() {
             <div class="text-green-600 font-semibold text-[16px]">${producto.cantidadStock}</div>
           </div>
           <div class="mt-3 pt-2 flex gap-2 w-full">
-            <button id="editar_producto" class="w-full py-2 px-3 flex gap-3 text-[14px] border border-gray-200 rounded-md font-semibold  justify-center">
+            <button id="editar_producto" onclick="editarProducto(${indice})" class="nuevo_producto w-full py-2 px-3 flex gap-3 text-[14px] border border-gray-200 rounded-md font-semibold  justify-center">
               <img class="w-4" src="./images/editar.svg" alt="">
               <span class="">Editar</span>
             </button>
@@ -360,6 +371,7 @@ function mostrarProducto() {
     `;
   
     contenedorProductos.appendChild(imprimirProducto);
+    actualizarEventos();
 
   });
 
@@ -394,6 +406,45 @@ function actualizarCantidadProductos() {
   const cantidadProductosElement = document.getElementById("total_productos");
   cantidadProductosElement.textContent = cantidadProductos;
 }
+
+function editarProducto(indice) {
+
+  document.getElementById("nombre_producto").value = productos[indice].nombre;
+  document.getElementById("descripcion").value= productos[indice].descripcion;
+  document.getElementById("categoria").value = productos[indice].categoria;
+  document.getElementById("subcategoria").value = productos[indice].subcategoria;
+  document.getElementById("marca").value = productos[indice].marca;
+  document.getElementById("modelo").value = productos[indice].modelo;
+  document.getElementById("precio_compra").value = productos[indice].precioCompra;
+  document.getElementById("precio_venta").value = productos[indice].precioVenta;
+  document.getElementById("costo_envio").value = productos[indice].costoEnvio;
+  document.getElementById("cantidad_stock").value = productos[indice].cantidadStock;
+  document.getElementById("cantidad_minima").value = productos[indice].cantidadMinima;
+  document.getElementById("nombre_proveedor").value = productos[indice].proveedor;
+  document.getElementById("fecha_ingreso").value = productos[indice].fechaIngreso;
+  document.getElementById("fecha_vencimiento").value = productos[indice].fechaVencimiento;
+  document.getElementById("peso").value = productos[indice].peso;
+  document.getElementById("largo_producto").value = productos[indice].dimensiones.largo;
+  document.getElementById("ancho_producto").value = productos[indice].dimensiones.ancho;
+  document.getElementById("alto_producto").value = productos[indice].dimensiones.alto;
+  document.getElementById("color_producto").value = productos[indice].color;
+  document.getElementById("material").value = productos[indice].material;
+  document.getElementById("codigo_barra").value = productos[indice].codigoBarra;
+  document.getElementById("estado").value = productos[indice].estado;
+  document.getElementById("notas_adicionales").value = productos[indice].notas;
+  
+  agregarUrl(event, indice);
+  
+  //document.getElementById("url_imagen").
+
+  
+  /*for (let i = 0; i < productos[indice].imagenes.length; i++) {
+    document.getElementsByClassName("url_imagen")[i].value = productos[indice].imagenes[i];
+  }*/
+
+}
+
+
 
 
 
