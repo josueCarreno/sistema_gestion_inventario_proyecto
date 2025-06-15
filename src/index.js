@@ -1,7 +1,13 @@
+const botonActualizar = document.getElementById("nuevo_producto");
+const spanActualizar = botonActualizar.querySelector("span");
+
 function actualizarEventos() {
   document.querySelectorAll('.nuevo_producto').forEach(agregar => {
     agregar.addEventListener('click', function() {
       irArriba();
+
+      
+
       sinProductos.classList.remove('flex');
       sinProductos.classList.add('hidden');
       ocultarSecciones("seccion_1");
@@ -12,6 +18,15 @@ function actualizarEventos() {
   document.querySelectorAll('.volver').forEach(atras => {
     atras.addEventListener('click', function(event) {
       event.preventDefault();
+
+
+      if (spanActualizar.textContent === "Actualizar Producto") {
+        botonActualizar.classList.remove("gap-2");
+        botonActualizar.classList.add("gap-4");
+        spanActualizar.textContent = "Crear Producto";
+        spanActualizar.classList.remove("text-[12px]");
+      }
+
 
       irArriba();
 
@@ -27,25 +42,34 @@ function actualizarEventos() {
 
 actualizarEventos();
 
+const seccionBusqueda = document.getElementById("busqueda");
 let sinProductos = document.getElementById("contenedor_sin_productos");
 let productos = [];
 
 function ocultarSecciones(seccion = "seccion_1") {
-  ocultar = document.getElementsByClassName(seccion);
 
+  if (seccion === "seccion_1") {
+    seccionBusqueda.classList.remove('grid');
+    seccionBusqueda.classList.add('hidden');
+  } else {
+    seccionBusqueda.classList.remove('hidden');
+    seccionBusqueda.classList.add('grid');
+  }
+
+  ocultar = document.getElementsByClassName(seccion);
   for (elemento of ocultar) {
     elemento.classList.remove('flex');
-    elemento.style.display = 'none';
+    elemento.classList.add('hidden');
   }
 }
 
 function mostrarSecciones(seccion = "seccion_2") {
+  
   mostrar = document.getElementsByClassName(seccion);
   
   for (elemento of mostrar) {
     elemento.classList.add('flex');
     elemento.classList.remove('hidden');
-    elemento.style.display = 'flex';
   }
 }
 
@@ -246,19 +270,19 @@ function eliminarEtiqueta() {
 
 let formulario = document.getElementById("formulario");
 
-formulario.addEventListener("submit", function (event) {
+function addProduct(event) {
   event.preventDefault();
   nuevoProducto();
   ocultarSecciones("seccion_2");
   mostrarSecciones("seccion_1");
   irArriba();
   limpiarFormulario();
-});
+};
 
 
 contadorID = 1;
 
-function nuevoProducto(booleano = false) {
+function nuevoProducto() {
 
   let producto = {};
 
@@ -299,12 +323,16 @@ function nuevoProducto(booleano = false) {
 
   producto = {id, nombre, descripcion, categoria, subcategoria, marca, modelo, precioCompra, precioVenta, costoEnvio, cantidadStock, cantidadMinima, proveedor, fechaIngreso, fechaVencimiento, peso, dimensiones: {largo, ancho, alto}, color, material, codigoBarras, imagenes, especificacionesTecnicas, etiquetas ,estado, notas};
 
-  productos.push(producto);
-  contadorID++;
+  if (spanActualizar.textContent === "Actualizar Producto") {
+    productos[indiceProducto] = producto;
+    console.log("actualizar");
+  } else {
+    console.log("nuevo producto");
+    productos.push(producto);
+    contadorID++;
+    actualizarCantidadProductos();
+  }
   console.log(productos);
-
-  actualizarCantidadProductos();
-
   mostrarProducto();
 }
 
@@ -320,12 +348,12 @@ function mostrarProducto() {
     imprimirProducto.classList.add("flex", "flex-col", "gap-3", "p-6", "border", "border-gray-200", "rounded-md", "seccion_1", "mt-6", "justify-center", "bg-white");
 
     imprimirProducto.innerHTML = `
-      <div class="flex items-start">
+      <div class="flex items-start justify-between">
           <div class="w-[75%]">
             <h3 class="text-[18px] font-semibold">${producto.nombre}</h3>
-            <p class="mt-1 text-[14px] text-[#4B5563]">${producto.marca} - ${producto.modelo}</p>
+            <p class="mt-1 text-[14px] text-[#4B5563] font-semibold">${producto.marca} - ${producto.modelo}</p>
           </div>
-          <div class="w-[25%] flex justify-center items-center py-0.5 px-2.5 rounded-2xl text-[12px] text-white bg-[#0F172A]">
+          <div class=" flex justify-center items-center py-0.5 px-2.5 rounded-2xl text-[12px] text-white bg-[#0F172A]">
             <div class="">${producto.estado}</div>
           </div>
         </div>
@@ -407,7 +435,11 @@ function actualizarCantidadProductos() {
   cantidadProductosElement.textContent = cantidadProductos;
 }
 
+let indiceProducto = 0;
+
 function editarProducto(indice) {
+
+  indiceProducto = indice;
 
   document.getElementById("nombre_producto").value = productos[indice].nombre;
   document.getElementById("descripcion").value= productos[indice].descripcion;
@@ -434,6 +466,11 @@ function editarProducto(indice) {
   document.getElementById("notas_adicionales").value = productos[indice].notas;
   
   agregarUrl(event, indice);
+
+  botonActualizar.classList.remove("gap-4");
+  botonActualizar.classList.add("gap-2");
+  spanActualizar.textContent = "Actualizar Producto";
+  spanActualizar.classList.add("text-[12px]");
   
   //document.getElementById("url_imagen").
 
