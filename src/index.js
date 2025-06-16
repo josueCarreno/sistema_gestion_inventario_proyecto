@@ -147,7 +147,7 @@ function agregarUrl(event, indice = undefined) {
 
   let cuerpoDiv = `
     <input class="url_imagen py-2 px-3 border border-gray-200 rounded-md w-[85%]" type="text" name="url_imagen" placeholder="URL de la imagen">
-    <button onClick="this.parentElement.remove();" class="eliminar_url text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md ">
+    <button onClick="this.parentElement.remove();" class="eliminar_url text-[#020817] py-2 px-4 flex items-center justify-center gap-2 text-[14px] border border-gray-200 rounded-md hover:bg-[#F1F5F9] cursor-pointer">
       <img width="16px" src="./images/equis_gris.svg" alt="" class=" top-1.5 right-1.5 z-10 flex">
     </button>
   `;
@@ -214,13 +214,28 @@ let etiquetas = [];
 function sumarEtiqueta(booleano, valor1) {
   
   let cuerpoDiv = "";
+  let etiquetas_contenedor = document.getElementById("etiquetas_contenedor");
+
+  if (indice != undefined) {
+
+    document.getElementById("etiquetas_contenedor").innerHTML = "";
+
+    for (let i = 0; i < productos[indiceProducto].etiquetas.length; i++) {
+      etiquetas_contenedor.appendChild(document.createElement("div"));
+      etiquetas_contenedor.lastElementChild.classList.add("text-[12px]", "rounded-full", "py-0.5", "px-2.5", "bg-[#F4F7FA]", "flex", "gap-1.5");
+      etiquetas_contenedor.lastElementChild.innerHTML = cuerpoDiv;
+
+      document.getElementsByClassName("url_imagen")[i].value = productos[indice].imagenes[i];
+    };    
+    return;
+  }
 
   switch (booleano) {
     case true:
 
       etiquetas.push(valor1.value);
 
-      let etiquetas_contenedor = document.getElementById("etiquetas_contenedor");
+      
       cuerpoDiv = `
         ${valor1.value}
         <img width="16px" src="./images/equis_gris.svg" alt="" class="eliminar_etiqueta top-1.5 right-1.5 z-10 flex">
@@ -259,13 +274,20 @@ function sumarEtiqueta(booleano, valor1) {
   
 }
 
-function eliminarEtiqueta() {
+function eliminarEtiqueta(indice = -1) {
   let eliminar_etiqueta = document.getElementsByClassName("eliminar_etiqueta");
+
+  if (productos.length >= 1 && indice >= 0) {
+    document.getElementById("etiquetas_contenedor").children[indice].remove();
+    productos[indiceProducto].etiquetas.splice([indice], 1);
+  }
+  
   for (elemento of eliminar_etiqueta) {
     elemento.addEventListener("click", function () {
       this.parentElement.remove();
     });
-  }
+  };
+
 };
 
 let formulario = document.getElementById("formulario");
@@ -353,7 +375,7 @@ function mostrarProducto() {
             <h3 class="text-[18px] font-semibold">${producto.nombre}</h3>
             <p class="mt-1 text-[14px] text-[#4B5563] font-semibold">${producto.marca} - ${producto.modelo}</p>
           </div>
-          <div class=" flex justify-center items-center py-0.5 px-2.5 rounded-2xl text-[12px] text-white bg-[#0F172A]">
+          <div class=" flex justify-center items-center py-0.5 px-2.5 rounded-2xl text-[12px] text-white bg-[#0F172A] hover:bg-[#262E3F]">
             <div class="">${producto.estado}</div>
           </div>
         </div>
@@ -387,7 +409,7 @@ function mostrarProducto() {
             <div class="text-green-600 font-semibold text-[16px]">${producto.cantidadStock}</div>
           </div>
           <div class="mt-3 pt-2 flex gap-2 w-full">
-            <button id="editar_producto" onclick="editarProducto(${indice})" class="nuevo_producto w-full py-2 px-3 flex gap-3 text-[14px] border border-gray-200 rounded-md font-semibold  justify-center">
+            <button id="editar_producto" onclick="editarProducto(${indice})" class="nuevo_producto w-full py-2 px-3 flex gap-3 text-[14px] border border-gray-200 rounded-md font-semibold  justify-center hover:bg-[#F1F5F9] cursor-pointer">
               <img class="w-4" src="./images/editar.svg" alt="">
               <span class="">Editar</span>
             </button>
@@ -435,7 +457,7 @@ function actualizarCantidadProductos() {
   cantidadProductosElement.textContent = cantidadProductos;
 }
 
-let indiceProducto = 0;
+let indiceProducto = -1;
 
 function editarProducto(indice) {
 
@@ -466,6 +488,7 @@ function editarProducto(indice) {
   document.getElementById("notas_adicionales").value = productos[indice].notas;
   
   agregarUrl(event, indice);
+  sumarEtiqueta();
 
   botonActualizar.classList.remove("gap-4");
   botonActualizar.classList.add("gap-2");
