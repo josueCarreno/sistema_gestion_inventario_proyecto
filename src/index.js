@@ -208,37 +208,43 @@ agregarEspecificacion.addEventListener("click", function (event) {
   sumarEtiqueta(false);
 });
 
-let especificacionesTecnicas = [];
-let etiquetas = [];
-
-function sumarEtiqueta(booleano, valor1) {
+function sumarEtiqueta(booleano, valor1, indice = undefined) {
   
   let cuerpoDiv = "";
-  let etiquetas_contenedor = document.getElementById("etiquetas_contenedor");
-
-  if (indice != undefined) {
-
-    document.getElementById("etiquetas_contenedor").innerHTML = "";
-
-    for (let i = 0; i < productos[indiceProducto].etiquetas.length; i++) {
-      etiquetas_contenedor.appendChild(document.createElement("div"));
-      etiquetas_contenedor.lastElementChild.classList.add("text-[12px]", "rounded-full", "py-0.5", "px-2.5", "bg-[#F4F7FA]", "flex", "gap-1.5");
-      etiquetas_contenedor.lastElementChild.innerHTML = cuerpoDiv;
-
-      document.getElementsByClassName("url_imagen")[i].value = productos[indice].imagenes[i];
-    };    
-    return;
-  }
+  
 
   switch (booleano) {
     case true:
 
-      etiquetas.push(valor1.value);
+      let etiquetas_contenedor = document.getElementById("etiquetas_contenedor");
 
+      if (indice != undefined) {
+        if (productos[indiceProducto].etiquetas.length >= 1) {
+          
+          etiquetas_contenedor.innerHTML = "";
+          
+          for (let i = 0; i < productos[indiceProducto].etiquetas.length; i++) {
+            cuerpoDiv = `
+              <span class="font-medium nombreEtiqueta">${productos[indiceProducto].etiquetas[i]}</span>
+              <img  width="16px" src="./images/equis_gris.svg" alt="" class="eliminar_etiqueta top-1.5 right-1.5 z-10 flex cursor-pointer">
+            `;
+            etiquetas_contenedor.appendChild(document.createElement("div"));
+            etiquetas_contenedor.lastElementChild.classList.add("text-[12px]", "rounded-full", "py-0.5", "px-2.5", "bg-[#F4F7FA]", "flex", "gap-1.5");
+            etiquetas_contenedor.lastElementChild.innerHTML = cuerpoDiv;
+          }
+        }
+        eliminarEtiqueta();
+        return;
+      }
+    
+      let inputEtiqueta = document.getElementById("tag");
+      if (inputEtiqueta.value === "") {
+        return;
+      };
       
       cuerpoDiv = `
-        ${valor1.value}
-        <img width="16px" src="./images/equis_gris.svg" alt="" class="eliminar_etiqueta top-1.5 right-1.5 z-10 flex">
+        <span class="font-medium nombreEtiqueta">${valor1.value}</span>
+        <img width="16px" src="./images/equis_gris.svg" alt="" class="eliminar_etiqueta top-1.5 right-1.5 z-10 flex cursor-pointer">
       `;
       etiquetas_contenedor.appendChild(document.createElement("div"));
       etiquetas_contenedor.lastElementChild.classList.add("text-[12px]", "rounded-full", "py-0.5", "px-2.5", "bg-[#F4F7FA]", "flex", "gap-1.5");
@@ -247,20 +253,44 @@ function sumarEtiqueta(booleano, valor1) {
       break;
 
     case false:
-      let especificacion = document.getElementById("especificacion");
-      let valor = document.getElementById("valor_especificacion");
+
       let especificaciones_contenedor = document.getElementById("especificaciones_contenedor");
 
-      let especificacionProducto = {
-        especificacion: especificacion.value,
-        valor: valor.value
+      if (indice != undefined) {
+        if (productos[indiceProducto].especificacionesTecnicas.length >= 1) {
+          
+          especificaciones_contenedor.innerHTML = "";
+
+          
+          for (let i = 0; i < productos[indiceProducto].especificacionesTecnicas.length; i++) {
+
+            let especificacionImpreso = productos[indiceProducto].especificacionesTecnicas[i].especificacion;
+            let valorImpreso = productos[indiceProducto].especificacionesTecnicas[i].valor;
+
+            cuerpoDiv = `
+              <span class="font-medium">${especificacionImpreso}:</span>
+              <span>${valorImpreso}</span>
+              <img  src="./images/equis_gris.svg" alt="" onclick="this.parentElement.remove();" class="eliminar_especificacion p-3 w-[40px] cursor-pointer">
+            `;
+            especificaciones_contenedor.appendChild(document.createElement("div"));
+            especificaciones_contenedor.lastElementChild.classList.add("flex", "items-center", "gap-2", "bg-gray-50", "rounded", "p-2");
+            especificaciones_contenedor.lastElementChild.innerHTML = cuerpoDiv;
+          }
+        }
+        return;
       }
-      especificacionesTecnicas.push(especificacionProducto);
+    
+      let especificacion = document.getElementById("especificacion");
+      let valor = document.getElementById("valor_especificacion");
+
+      if (especificacion.value === "" || valor.value === "") {
+        return;
+      };
 
       cuerpoDiv = `
         <span class="font-medium">${especificacion.value}:</span>
         <span>${valor.value}</span>
-        <img  src="./images/equis_gris.svg" alt="" class="eliminar_especificacion p-3 w-[40px]">
+        <img  src="./images/equis_gris.svg" alt="" onclick="this.parentElement.remove();" class="eliminar_especificacion p-3 w-[40px] cursor-pointer">
       `;
       especificaciones_contenedor.appendChild(document.createElement("div"));
       especificaciones_contenedor.lastElementChild.classList.add("flex", "items-center", "gap-2", "bg-gray-50", "rounded", "p-2");
@@ -274,13 +304,8 @@ function sumarEtiqueta(booleano, valor1) {
   
 }
 
-function eliminarEtiqueta(indice = -1) {
+function eliminarEtiqueta() {
   let eliminar_etiqueta = document.getElementsByClassName("eliminar_etiqueta");
-
-  if (productos.length >= 1 && indice >= 0) {
-    document.getElementById("etiquetas_contenedor").children[indice].remove();
-    productos[indiceProducto].etiquetas.splice([indice], 1);
-  }
   
   for (elemento of eliminar_etiqueta) {
     elemento.addEventListener("click", function () {
@@ -338,10 +363,34 @@ function nuevoProducto() {
 
   let imagenesGlobal = document.getElementsByClassName("url_imagen");
   let imagenes = [];
-  
   for (elemento of imagenesGlobal) {
     imagenes.push(elemento.value);
   }
+
+  let etiquetas_contenedor = document.getElementsByClassName("nombreEtiqueta");
+  let etiquetas = [];
+  for (elemento of etiquetas_contenedor) {
+    etiquetas.push(elemento.textContent);
+  }
+
+  let especificacionesContenedor = document.getElementById("especificaciones_contenedor");
+  let especificacionesTecnicas = [];
+
+  for (i = 0; i < especificacionesContenedor.children.length; i++) {
+    
+    let especificacionImpreso = especificacionesContenedor.children[i].children[0].textContent.replace(":", "");
+    let valorImpreso = especificacionesContenedor.children[i].children[1].textContent;
+
+    especificacionesTecnicas.push({especificacion: especificacionImpreso, valor: valorImpreso});
+
+  }
+
+
+  /*let especificacionProducto = {
+    especificacion: especificacion.value,
+    valor: valor.value
+  }
+  especificacionesTecnicas.push(especificacionProducto);*/
 
   producto = {id, nombre, descripcion, categoria, subcategoria, marca, modelo, precioCompra, precioVenta, costoEnvio, cantidadStock, cantidadMinima, proveedor, fechaIngreso, fechaVencimiento, peso, dimensiones: {largo, ancho, alto}, color, material, codigoBarras, imagenes, especificacionesTecnicas, etiquetas ,estado, notas};
 
@@ -413,7 +462,7 @@ function mostrarProducto() {
               <img class="w-4" src="./images/editar.svg" alt="">
               <span class="">Editar</span>
             </button>
-            <button onclick="eliminarProducto(${indice})" class=" px-3 flex gap-4 border border-gray-200 rounded-md font-semibold  justify-center items-center">
+            <button onclick="eliminarProducto(${indice})" class=" px-3 flex gap-4 border border-gray-200 rounded-md font-semibold  justify-center items-center hover:bg-[#F1F5F9] cursor-pointer">
               <img width="22px" src="./images/eliminar.svg" alt="">
             </button>
           </div>
@@ -488,7 +537,8 @@ function editarProducto(indice) {
   document.getElementById("notas_adicionales").value = productos[indice].notas;
   
   agregarUrl(event, indice);
-  sumarEtiqueta();
+  sumarEtiqueta(true, "", indice);
+  sumarEtiqueta(false, "", indice);
 
   botonActualizar.classList.remove("gap-4");
   botonActualizar.classList.add("gap-2");
