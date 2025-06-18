@@ -6,12 +6,12 @@ function actualizarEventos() {
     agregar.addEventListener('click', function() {
       irArriba();
 
-      
-
       sinProductos.classList.remove('flex');
       sinProductos.classList.add('hidden');
       ocultarSecciones("seccion_1");
       mostrarSecciones("seccion_2");
+
+      
     });
   });
     
@@ -208,6 +208,9 @@ agregarEspecificacion.addEventListener("click", function (event) {
   sumarEtiqueta(false);
 });
 
+let etiquetas_contenedor = document.getElementById("etiquetas_contenedor");
+let especificaciones_contenedor = document.getElementById("especificaciones_contenedor");
+
 function sumarEtiqueta(booleano, valor1, indice = undefined) {
   
   let cuerpoDiv = "";
@@ -215,8 +218,6 @@ function sumarEtiqueta(booleano, valor1, indice = undefined) {
 
   switch (booleano) {
     case true:
-
-      let etiquetas_contenedor = document.getElementById("etiquetas_contenedor");
 
       if (indice != undefined) {
         if (productos[indiceProducto].etiquetas.length >= 1) {
@@ -253,8 +254,6 @@ function sumarEtiqueta(booleano, valor1, indice = undefined) {
       break;
 
     case false:
-
-      let especificaciones_contenedor = document.getElementById("especificaciones_contenedor");
 
       if (indice != undefined) {
         if (productos[indiceProducto].especificacionesTecnicas.length >= 1) {
@@ -481,6 +480,8 @@ function mostrarProducto() {
 function limpiarFormulario() {
   let formulario = document.getElementById("formulario");
   formulario.reset();
+  etiquetas_contenedor.innerHTML = "";
+  especificaciones_contenedor.innerHTML = "";
 }
 
 function eliminarProducto(indice) {
