@@ -139,11 +139,12 @@ function actualizarSubcategoria(posicion) {
 });
 }
 
+let url_contenedor = document.getElementById("url_contenedor");
+
 function agregarUrl(event, indice = undefined) {
   
   event.preventDefault();
 
-  let url_contenedor = document.getElementById("url_contenedor");
 
   let cuerpoDiv = `
     <input class="url_imagen py-2 px-3 border border-gray-200 rounded-md w-[85%]" type="text" name="url_imagen" placeholder="URL de la imagen">
@@ -318,11 +319,12 @@ let formulario = document.getElementById("formulario");
 
 function addProduct(event) {
   event.preventDefault();
-  nuevoProducto();
+  validarInput();
+  /*nuevoProducto();
   ocultarSecciones("seccion_2");
   mostrarSecciones("seccion_1");
   irArriba();
-  limpiarFormulario();
+  limpiarFormulario();*/
 };
 
 
@@ -482,6 +484,7 @@ function limpiarFormulario() {
   formulario.reset();
   etiquetas_contenedor.innerHTML = "";
   especificaciones_contenedor.innerHTML = "";
+  url_contenedor.innerHTML = "";
 }
 
 function eliminarProducto(indice) {
@@ -546,12 +549,39 @@ function editarProducto(indice) {
   spanActualizar.textContent = "Actualizar Producto";
   spanActualizar.classList.add("text-[12px]");
   
-  //document.getElementById("url_imagen").
+};
 
+function validarInput() {
+
+  let regexGlobal = [
+    /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s]+$/,
+    2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+  ];
   
-  /*for (let i = 0; i < productos[indice].imagenes.length; i++) {
-    document.getElementsByClassName("url_imagen")[i].value = productos[indice].imagenes[i];
-  }*/
+  let errores = [];
+
+  const inputs = document.getElementsByTagName('input');
+  let contador = 0;
+  for (elemento of inputs) {
+    if (elemento.id === "buscador") {
+      continue;
+    }
+    let error = "";
+    let input = elemento.value;
+    
+    //errores.push({valor : input, validacion : regexGlobal[contador]});
+
+    if (regexGlobal[0].test(input)) {
+      errores.push({valor : input, validacion : regexGlobal[contador]});
+      error = "ok";
+    } else {
+      error = "error";
+    }
+
+    contador++;
+  };
+  console.log(errores);
+
 
 }
 
